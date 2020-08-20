@@ -17,7 +17,7 @@ wrappedModule['addInitializedListener'] = function (func) {
   }
 };
 
-wrappedModule['getCfd'] = function () {
+wrappedModule['getCfddlc'] = function () {
   return cfddlcjsWasmJson;
 };
 

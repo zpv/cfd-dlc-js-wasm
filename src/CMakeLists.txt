@@ -25,7 +25,7 @@ endif() # CMAKE_BUILD_TYPE
 include(../cmake/Cpp11Setting.cmake)
 
 # cfd-js-wasm
-project(cfdjs_wasm CXX)
+project(cfddlcjs_wasm CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -35,17 +35,17 @@ if(${USE_EMSCRIPTEN})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s TOTAL_MEMORY=67108864 -s ABORTING_MALLOC=0")
 endif()
 
-set(CFDJS_API_LIBRARY cfdjs_api)
+set(CFDDLCJS_API_LIBRARY cfddlcjs_api)
 set(CFD_LIBRARY cfd)
 set(CFDCORE_LIBRARY cfdcore)
 set(UNIVALUE_LIBRARY univalue)
 set(LIBWALLY_LIBRARY wally)
 
 # node-api library
-set(CFDJS_WASM_LIBRARY cfdjs_wasm)
-add_executable(${CFDJS_WASM_LIBRARY} cfdjs_wasm_json.cpp)
+set(CFDDLCJS_WASM_LIBRARY cfddlcjs_wasm)
+add_executable(${CFDDLCJS_WASM_LIBRARY} cfddlcjs_wasm_json.cpp)
 
-target_compile_options(${CFDJS_WASM_LIBRARY}
+target_compile_options(${CFDDLCJS_WASM_LIBRARY}
   PRIVATE
     $<IF:$<CXX_COMPILER_ID:MSVC>,
       /source-charset:utf-8 /Wall ${OPTION_BIGOBJ}
@@ -57,7 +57,7 @@ target_compile_options(${CFDJS_WASM_LIBRARY}
 
 #     -fstack-protector
 if(ENABLE_SHARED)
-target_compile_definitions(${CFDJS_WASM_LIBRARY}
+target_compile_definitions(${CFDDLCJS_WASM_LIBRARY}
   PRIVATE
     CFD_JS_API_SHARED=1
     CFD_SHARED=1
@@ -65,23 +65,23 @@ target_compile_definitions(${CFDJS_WASM_LIBRARY}
     ${CFD_ELEMENTS_USE}
 )
 else()
-target_compile_definitions(${CFDJS_WASM_LIBRARY}
+target_compile_definitions(${CFDDLCJS_WASM_LIBRARY}
   PRIVATE
     ${CFD_ELEMENTS_USE}
 )
 endif()
 
-target_include_directories(${CFDJS_WASM_LIBRARY}
+target_include_directories(${CFDDLCJS_WASM_LIBRARY}
   PRIVATE
     .
 )
 
-target_link_directories(${CFDJS_WASM_LIBRARY}
+target_link_directories(${CFDDLCJS_WASM_LIBRARY}
   PRIVATE
     ./
 )
 
-target_link_libraries(${CFDJS_WASM_LIBRARY}
+target_link_libraries(${CFDDLCJS_WASM_LIBRARY}
   PRIVATE $<$<BOOL:$<CXX_COMPILER_ID:MSVC>>:winmm.lib>
   PRIVATE $<$<BOOL:$<CXX_COMPILER_ID:MSVC>>:ws2_32.lib>
   PRIVATE $<$<BOOL:$<CXX_COMPILER_ID:GNU>>:-static-libgcc>
@@ -89,7 +89,7 @@ target_link_libraries(${CFDJS_WASM_LIBRARY}
   PRIVATE $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:pthread>
   PRIVATE $<IF:$<OR:$<PLATFORM_ID:Darwin>,$<CXX_COMPILER_ID:MSVC>>,,rt>
   PRIVATE
-    ${CFDJS_API_LIBRARY}
+    ${CFDDLCJS_API_LIBRARY}
     ${CFD_LIBRARY}
     ${CFDCORE_LIBRARY}
     ${UNIVALUE_LIBRARY}

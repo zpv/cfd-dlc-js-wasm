@@ -1,3 +1,2 @@
-const cfdjsWasmModule = require('./cfdjs_wasm_json_wrap');
-
-module.exports = cfdjsWasmModule;
+const cfddlcjsWasmModule = require('./cfddlcjs_wasm_json_wrap');
+module.exports = cfddlcjsWasmModule;

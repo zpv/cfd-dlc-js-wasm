@@ -82,8 +82,6 @@ std::string CallJsonApi(const std::string& command, const std::string& param) {
   std::string result;
   try {
     cfd::dlc::js::api::json::InitializeMap();
-    std::cout << "CallJsonApi command:" << command << std::endl;
-    std::cout << "CallJsonApi param:" << param << std::endl;
     if (g_response_map.count(command) > 0) {
       return g_response_map[command]();
     } else if (g_callback_map.count(command) > 0) {
